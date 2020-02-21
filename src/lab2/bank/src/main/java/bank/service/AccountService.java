@@ -1,11 +1,14 @@
 package lab2.bank.src.main.java.bank.service;
 
-import bank.dao.AccountDAO;
-import bank.dao.IAccountDAO;
-import bank.domain.Account;
-import bank.domain.Customer;
+import lab2.bank.src.main.java.bank.dao.AccountDAO;
+import lab2.bank.src.main.java.bank.dao.IAccountDAO;
+import lab2.bank.src.main.java.bank.domain.Account;
+import lab2.bank.src.main.java.bank.domain.Customer;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class AccountService implements IAccountService {
@@ -16,8 +19,7 @@ public class AccountService implements IAccountService {
 		accountDAO=new AccountDAO();
 	}
 
-	public Account createAccount(long accountNumber, String customerName) {
-		Account account = new Account(accountNumber);
+	public Account createAccount(Account account, String customerName) {
 		Customer customer = new Customer(customerName);
 		account.setCustomer(customer);
 		accountDAO.saveAccount(account);
@@ -53,5 +55,17 @@ public class AccountService implements IAccountService {
 		fromAccount.transferFunds(toAccount, amount, description);
 		accountDAO.updateAccount(fromAccount);
 		accountDAO.updateAccount(toAccount);
+	}
+
+	public void addInterest() {
+		Iterator<Account> iterator = getAllAccounts().iterator();
+		List<Account> updates = new ArrayList<>();
+		while (iterator.hasNext()) {
+			Account account = iterator.next();
+			double interest = account.calculateInterest();
+			account.deposit(interest);
+			updates.add(account);
+		}
+		updates.forEach(a -> accountDAO.updateAccount(a));
 	}
 }

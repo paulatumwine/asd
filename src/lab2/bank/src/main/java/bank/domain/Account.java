@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 
 
-public class Account {
+public abstract class Account {
 	long accountnumber;
 	Collection<AccountEntry> entryList = new ArrayList<AccountEntry>();
 	Customer customer;
@@ -58,4 +58,5 @@ public class Account {
 		return entryList;
 	}
 
+	public abstract double calculateInterest();
 }
