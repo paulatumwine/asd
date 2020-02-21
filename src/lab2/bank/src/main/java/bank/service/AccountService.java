@@ -5,10 +5,7 @@ import lab2.bank.src.main.java.bank.dao.IAccountDAO;
 import lab2.bank.src.main.java.bank.domain.Account;
 import lab2.bank.src.main.java.bank.domain.Customer;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 
 
 public class AccountService implements IAccountService {
@@ -58,14 +55,6 @@ public class AccountService implements IAccountService {
 	}
 
 	public void addInterest() {
-		Iterator<Account> iterator = getAllAccounts().iterator();
-		List<Account> updates = new ArrayList<>();
-		while (iterator.hasNext()) {
-			Account account = iterator.next();
-			double interest = account.calculateInterest();
-			account.deposit(interest);
-			updates.add(account);
-		}
-		updates.forEach(a -> accountDAO.updateAccount(a));
+		getAllAccounts().forEach(account -> account.deposit(account.calculateInterest()));
 	}
 }
