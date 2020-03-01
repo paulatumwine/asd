@@ -1,11 +1,16 @@
 package bank.domain;
 
+import bank.AccountLogger;
+import bank.EmailSender;
+import bank.SMSSender;
+import bank.Subject;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
 
-public class Account {
+public class Account extends Subject {
 	long accountnumber;
 	Collection<AccountEntry> entryList = new ArrayList<AccountEntry>();
 	Customer customer;
@@ -13,6 +18,9 @@ public class Account {
 	
 	public Account (long accountnr){
 		this.accountnumber = accountnr;
+		addObserver(new AccountLogger());
+		addObserver(new SMSSender());
+		addObserver(new EmailSender());
 	}
 	public long getAccountnumber() {
 		return accountnumber;
@@ -30,10 +38,12 @@ public class Account {
 	public void deposit(double amount){
 		AccountEntry entry = new AccountEntry(new Date(), amount, "deposit", "", "");
 		entryList.add(entry);
+		donotify(this);
 	}
 	public void withdraw(double amount){
 		AccountEntry entry = new AccountEntry(new Date(), -amount, "withdraw", "", "");
-		entryList.add(entry);	
+		entryList.add(entry);
+		donotify(this);
 	}
 
 	private void addEntry(AccountEntry entry){
