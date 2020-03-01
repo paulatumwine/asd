@@ -3,7 +3,7 @@ package counter;
 import java.awt.*;
 
 
-public class OvalFrame extends javax.swing.JFrame
+public class OvalFrame extends javax.swing.JFrame implements IObserver
 {
 	private int count;
 
@@ -18,6 +18,10 @@ public class OvalFrame extends javax.swing.JFrame
 		this.addWindowListener(aSymWindow);
 	}
 
+	@Override
+	public void update(Integer count) {
+		setCount(count);
+	}
 
 	class SymWindow extends java.awt.event.WindowAdapter
 	{

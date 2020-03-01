@@ -3,7 +3,7 @@ package counter;
 import java.awt.*;
 
 
-public class TextFrame extends javax.swing.JFrame
+public class TextFrame extends javax.swing.JFrame implements IObserver
 {
 	javax.swing.JLabel JLabelCount = new javax.swing.JLabel();
 
@@ -22,6 +22,10 @@ public class TextFrame extends javax.swing.JFrame
 		this.addWindowListener(aSymWindow);
 	}
 
+	@Override
+	public void update(Integer count) {
+		setCount(count);
+	}
 
 	class SymWindow extends java.awt.event.WindowAdapter
 	{
