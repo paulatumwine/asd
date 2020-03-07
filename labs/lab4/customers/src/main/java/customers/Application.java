@@ -1,5 +1,9 @@
 package customers;
 
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.function.Predicate;
+
 public class Application {
 
 	public static void main(String[] args) {
@@ -18,6 +22,32 @@ public class Application {
 		
 		customerCollection.print();
 
+		System.out.println("All customers from Chicago:");
+		Predicate<Customer> customersPredicate = c -> c.getAddress().getCity().equals("Chicago");
+		Iterator<Customer> filterIterator = customerCollection.filterIterator(customersPredicate);
+		while (filterIterator.hasNext()) {
+			System.out.println(filterIterator.next());
+		}
+
+		System.out.println("All customers whose zip code starts with “12”");
+		customersPredicate = c -> c.getAddress().getZip().startsWith("12");
+		filterIterator = customerCollection.filterIterator(customersPredicate);
+		while (filterIterator.hasNext()) {
+			System.out.println(filterIterator.next());
+		}
+
+		System.out.println("Skipping a customer at a time:");
+		Iterator<Customer> skipIterator = customerCollection.skipIterator();
+		while (skipIterator.hasNext()) {
+			System.out.println(skipIterator.next());
+		}
+
+		System.out.println("All customers from youngest to oldest:");
+		Comparator<Customer> comparator = Comparator.comparingInt(Customer::getAge);
+		Iterator<Customer> ageIterator = customerCollection.ageIterator(comparator);
+		while (ageIterator.hasNext()) {
+			System.out.println(ageIterator.next());
+		}
 	}
 
 }
