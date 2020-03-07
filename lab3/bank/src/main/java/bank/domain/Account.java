@@ -55,7 +55,8 @@ public class Account extends Subject {
 		AccountEntry toEntry = new AccountEntry(new Date(), amount, description, ""+toAccount.getAccountnumber(), toAccount.getCustomer().getName());
 		entryList.add(fromEntry);	
 		toAccount.addEntry(toEntry);
-
+		donotify(toAccount);
+		donotify(this);
 	}
 	
 	public Customer getCustomer() {
