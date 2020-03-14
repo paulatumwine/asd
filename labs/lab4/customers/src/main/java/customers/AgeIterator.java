@@ -1,5 +1,6 @@
 package customers;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -10,7 +11,7 @@ public class AgeIterator<T> implements Iterator<T>{
     private Comparator comparator;
 
     public AgeIterator(List<T> list, Comparator<T> comparator) {
-            this.list = list;
+            this.list = new ArrayList<>(list);
             this.position = 0;
             this.comparator = comparator;
     }

@@ -22,6 +22,13 @@ public class Application {
 		
 		customerCollection.print();
 
+        System.out.println("All customers from youngest to oldest:");
+        Comparator<Customer> comparator = Comparator.comparingInt(Customer::getAge);
+        Iterator<Customer> ageIterator = customerCollection.ageIterator(comparator);
+        while (ageIterator.hasNext()) {
+            System.out.println(ageIterator.next());
+        }
+
 		System.out.println("All customers from Chicago:");
 		Predicate<Customer> customersPredicate = c -> c.getAddress().getCity().equals("Chicago");
 		Iterator<Customer> filterIterator = customerCollection.filterIterator(customersPredicate);
@@ -40,13 +47,6 @@ public class Application {
 		Iterator<Customer> skipIterator = customerCollection.skipIterator();
 		while (skipIterator.hasNext()) {
 			System.out.println(skipIterator.next());
-		}
-
-		System.out.println("All customers from youngest to oldest:");
-		Comparator<Customer> comparator = Comparator.comparingInt(Customer::getAge);
-		Iterator<Customer> ageIterator = customerCollection.ageIterator(comparator);
-		while (ageIterator.hasNext()) {
-			System.out.println(ageIterator.next());
 		}
 	}
 
