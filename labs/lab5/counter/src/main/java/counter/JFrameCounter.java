@@ -12,11 +12,13 @@ public class JFrameCounter extends JFrame {
     private JButton jButtonredo = new JButton();
     
     private Counter counter;
+    private HistoryList historyList;
 
     public JFrameCounter() {
         try {
             jbInit();
             counter = new Counter();
+            historyList = new HistoryList();
             TextFrame textframe = new TextFrame();
             textframe.setVisible(true);
             RectFrame rectframe = new RectFrame();
@@ -87,18 +89,24 @@ public class JFrameCounter extends JFrame {
     }
 
     private void jButtonIncrement_actionPerformed(ActionEvent e) {
-      counter.increment();
+        Command command = new IncrementCommand(counter);
+        command.execute();
+        historyList.addCommand(command);
     }
 
     private void jButtondecrement_actionPerformed(ActionEvent e) {
-    	counter.decrement();
+        Command command = new DecrementCommand(counter);
+        command.execute();
+        historyList.addCommand(command);
     }
 
     private void jButtonundo_actionPerformed(ActionEvent e) {
-    	System.out.println("undo");
+        System.out.println("undo");
+        historyList.undo();
     }
 
     private void jButtonredo_actionPerformed(ActionEvent e) {
     	System.out.println("redo");
+    	historyList.redo();
     }
 }
