@@ -13,5 +13,5 @@ public abstract class Level {
     }
 
     public abstract int addPoints(int points);
-    public abstract int getLevel();
+    public abstract String getLevel();
 }

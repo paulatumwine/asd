@@ -9,15 +9,15 @@ public class Level2 extends Level {
     @Override
     public int addPoints(int newPoints) {
         totalPoints = totalPoints + 2 * newPoints;
-        if (totalPoints > 20) { // move to level 3
-            Level level = new Level3(game, totalPoints);
+        if (totalPoints >= 15) { // move to level 2_5
+            Level level = new Level2_5(game, totalPoints);
             game.setLevel(level);
-            totalPoints = totalPoints + 2; //add 2 bonus points
+            totalPoints = totalPoints + 1; //add 1 bonus point
         }
         return totalPoints;
     }
 
-    public int getLevel() {
-        return 2;
+    public String getLevel() {
+        return "2";
     }
 }

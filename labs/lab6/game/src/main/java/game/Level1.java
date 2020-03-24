@@ -17,7 +17,7 @@ public class Level1 extends Level {
         return totalPoints;
     }
 
-    public int getLevel() {
-        return 1;
+    public String getLevel() {
+        return "1";
     }
 }

@@ -12,7 +12,7 @@ public class Level3 extends Level {
         return totalPoints;
     }
 
-    public int getLevel() {
-        return 3;
+    public String getLevel() {
+        return "3";
     }
 }
