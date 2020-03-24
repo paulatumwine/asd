@@ -13,6 +13,7 @@ public class JFrameCounter extends JFrame {
     
     private Counter counter;
     private HistoryList historyList;
+    ICounterState state;
 
     public JFrameCounter() {
         try {
@@ -28,6 +29,8 @@ public class JFrameCounter extends JFrame {
             counter.addObserver(textframe);
             counter.addObserver(rectframe);
             counter.addObserver(ovalframe);
+            state = new SingleDigitState(counter);
+            counter.setCounterState(state);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,15 +92,15 @@ public class JFrameCounter extends JFrame {
     }
 
     private void jButtonIncrement_actionPerformed(ActionEvent e) {
-        Command command = new IncrementCommand(counter);
-        command.execute();
-        historyList.addCommand(command);
+        ICommand ICommand = new IncrementCommand(counter);
+        ICommand.execute();
+        historyList.addCommand(ICommand);
     }
 
     private void jButtondecrement_actionPerformed(ActionEvent e) {
-        Command command = new DecrementCommand(counter);
-        command.execute();
-        historyList.addCommand(command);
+        ICommand ICommand = new DecrementCommand(counter);
+        ICommand.execute();
+        historyList.addCommand(ICommand);
     }
 
     private void jButtonundo_actionPerformed(ActionEvent e) {

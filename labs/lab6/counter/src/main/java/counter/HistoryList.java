@@ -4,29 +4,29 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class HistoryList {
-	private Collection<Command> commandlist = new ArrayList<Command>();
-	private Collection<Command> undolist = new ArrayList<Command>();
+	private Collection<ICommand> commandlist = new ArrayList<ICommand>();
+	private Collection<ICommand> undolist = new ArrayList<ICommand>();
 
 	public void undo() {
 		if (commandlist.size() > 0) {
-			Command commandObject = (Command) ((ArrayList<Command>) commandlist).get(commandlist.size() - 1);
-			((ArrayList<Command>) commandlist).remove(commandObject);
-			commandObject.unExecute();
-			undolist.add(commandObject);
+			ICommand ICommandObject = (ICommand) ((ArrayList<ICommand>) commandlist).get(commandlist.size() - 1);
+			((ArrayList<ICommand>) commandlist).remove(ICommandObject);
+			ICommandObject.unExecute();
+			undolist.add(ICommandObject);
 		}
 	}
 
 	public void redo() {
 		if (undolist.size() > 0) {
-			Command commandObject = (Command) ((ArrayList<Command>) undolist).get(undolist.size() - 1);
-			commandObject.execute();
-			((ArrayList<Command>) undolist).remove(commandObject);
-			commandlist.add(commandObject);
+			ICommand ICommandObject = (ICommand) ((ArrayList<ICommand>) undolist).get(undolist.size() - 1);
+			ICommandObject.execute();
+			((ArrayList<ICommand>) undolist).remove(ICommandObject);
+			commandlist.add(ICommandObject);
 		}
 	}
 
-	public void addCommand(Command commandObject) {
-		commandlist.add(commandObject);
+	public void addCommand(ICommand ICommandObject) {
+		commandlist.add(ICommandObject);
 	}
 
 }

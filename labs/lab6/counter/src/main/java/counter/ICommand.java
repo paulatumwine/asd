@@ -1,6 +1,6 @@
 package counter;
 
-public interface Command {
+public interface ICommand {
 	void execute();
 	void unExecute();
 }

@@ -1,6 +1,6 @@
 package counter;
 
-public class IncrementCommand implements Command {
+public class IncrementCommand implements ICommand {
 
     Counter counter;
 
