@@ -29,8 +29,15 @@ public class JFrameCounter extends JFrame {
             counter.addObserver(textframe);
             counter.addObserver(rectframe);
             counter.addObserver(ovalframe);
+
             state = new SingleDigitState(counter);
             counter.setCounterState(state);
+
+            LogHandler logHandler = new LogHandler(null);
+            DatabaseHandler databaseHandler = new DatabaseHandler(logHandler);
+            OddHandler oddHandler = new OddHandler(databaseHandler);
+            EvenHandler evenHandler = new EvenHandler(oddHandler);
+            counter.setCountHandler(evenHandler);
         } catch (Exception e) {
             e.printStackTrace();
         }
