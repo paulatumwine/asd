@@ -19,10 +19,12 @@ public class LoggingProxy implements InvocationHandler {
             logger.log("Calling method " + method.getName() + " with no arguments");
             return returnValue;
         }
-        logger.log("Calling method " + method.getName() + " with argument(s):");
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("Calling method " + method.getName() + " with argument(s):");
         for (int i = 0; i < args.length; i++) {
-            logger.log(" Param[" + i + "]: " + args[i].toString());
+            buffer.append(" Param[" + i + "]: " + args[i].toString());
         }
+        logger.log(buffer.toString());
         return returnValue;
     }
 }
