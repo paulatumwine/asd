@@ -4,45 +4,51 @@ import bank.dao.AccountDAO;
 import bank.dao.IAccountDAO;
 import bank.domain.Account;
 import bank.domain.Customer;
+import bank.proxies.LoggingProxy;
 
+import java.lang.reflect.Proxy;
 import java.util.Collection;
 
 
 public class AccountService implements IAccountService {
 	private IAccountDAO accountDAO;
-
+    private ClassLoader classLoader;
+    private IAccountDAO loggingProxy;
 	
 	public AccountService(){
 		accountDAO=new AccountDAO();
+		classLoader = IAccountDAO.class.getClassLoader();
+		loggingProxy = (IAccountDAO) Proxy.newProxyInstance(classLoader,
+                new Class[]{ IAccountDAO.class }, new LoggingProxy(accountDAO));
 	}
 
 	public Account createAccount(long accountNumber, String customerName) {
 		Account account = new Account(accountNumber);
 		Customer customer = new Customer(customerName);
 		account.setCustomer(customer);
-		accountDAO.saveAccount(account);
+        loggingProxy.saveAccount(account);
 		return account;
 	}
 
 	public void deposit(long accountNumber, double amount) {
-		Account account = accountDAO.loadAccount(accountNumber);
+		Account account = loggingProxy.loadAccount(accountNumber);
 		account.deposit(amount);
-		accountDAO.updateAccount(account);
+        loggingProxy.updateAccount(account);
 	}
 
 	public Account getAccount(long accountNumber) {
-		Account account = accountDAO.loadAccount(accountNumber);
+		Account account = loggingProxy.loadAccount(accountNumber);
 		return account;
 	}
 
 	public Collection<Account> getAllAccounts() {
-		return accountDAO.getAccounts();
+		return loggingProxy.getAccounts();
 	}
 
 	public void withdraw(long accountNumber, double amount) {
-		Account account = accountDAO.loadAccount(accountNumber);
+		Account account = loggingProxy.loadAccount(accountNumber);
 		account.withdraw(amount);
-		accountDAO.updateAccount(account);
+        loggingProxy.updateAccount(account);
 	}
 
 
