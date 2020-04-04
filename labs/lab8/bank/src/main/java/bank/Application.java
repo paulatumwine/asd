@@ -1,8 +1,10 @@
 package bank;
 
-import bank.domain.Account;
+import bank.adapters.AccountAdapter;
+import bank.adapters.IAccountAdapter;
 import bank.domain.AccountEntry;
 import bank.domain.Customer;
+import bank.dto.AccountDTO;
 import bank.proxies.TimingProxy;
 import bank.service.AccountService;
 import bank.service.IAccountService;
@@ -20,6 +22,7 @@ public class Application {
                 new Class[] { IAccountService.class },
                 new TimingProxy(accountService)
         );
+        IAccountAdapter accountAdapter = new AccountAdapter();
 
 		// create 2 accounts;
         timingProxy.createAccount(1263862, "Frank Brown");
@@ -33,9 +36,9 @@ public class Application {
         timingProxy.transferFunds(4253892, 1263862, 100, "payment of invoice 10232");
 		// show balances
 		
-		Collection<Account> accountlist = timingProxy.getAllAccounts();
+		Collection<AccountDTO> accountlist = timingProxy.getAllAccounts();
 		Customer customer = null;
-		for (Account account : accountlist) {
+		for (AccountDTO account : accountlist) {
 			customer = account.getCustomer();
 			System.out.println("Statement for Account: " + account.getAccountnumber());
 			System.out.println("Account Holder: " + customer.getName());
@@ -49,7 +52,7 @@ public class Application {
 			System.out.println("----------------------------------------"
 					+ "----------------------------------------");
 			System.out.printf("%30s%30s%20.2f\n\n", "", "Current Balance:",
-					account.getBalance());
+					accountAdapter.getAccount(account).getBalance());
 		}
 	}
 
