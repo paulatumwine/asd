@@ -8,7 +8,7 @@ import bank.email.IEmailSender;
 public class ProductionFactory implements IFactory {
     @Override
     public IEmailSender getEmailSender() {
-        return new EmailSender();
+        return EmailSender.getInstance();
     }
 
     @Override
