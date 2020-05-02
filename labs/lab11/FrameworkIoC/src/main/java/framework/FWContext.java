@@ -1,14 +1,11 @@
 package framework;
 
-import java.lang.reflect.InvocationTargetException;
+import org.reflections.Reflections;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-
-import org.reflections.Reflections;
 
 public class FWContext {
 
@@ -30,9 +27,19 @@ public class FWContext {
 	public void start() {
 		try {
 			for (Object theTestClass : objectMap) {
+                Method before = null;
+                // find all methods annotated with the @Before annotation
+                for (Method method : theTestClass.getClass().getDeclaredMethods()) {
+                    if (method.isAnnotationPresent(Before.class)) {
+                        before = method;
+                    }
+                }
 				// find all methods annotated with the @Test annotation
 				for (Method method : theTestClass.getClass().getDeclaredMethods()) {
 					if (method.isAnnotationPresent(Test.class)) {
+                        if (before != null) {
+                            before.invoke(theTestClass);
+                        }
 						method.invoke(theTestClass);
 					}
 				}
