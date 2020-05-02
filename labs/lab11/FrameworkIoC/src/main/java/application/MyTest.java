@@ -27,7 +27,7 @@ public class MyTest {
     @Test
     public void testMethod2() {
         assertEquals(calculator.add(3), 3);
-        assertEquals(calculator.subtract(6), -1);
+        assertEquals(calculator.subtract(6), -3);
     }
 
 }
