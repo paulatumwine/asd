@@ -1,12 +1,11 @@
 package customers;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Application {
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext(
-                "spring-config.xml");
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         ICustomerService customerService = context.getBean("customerService",
                 ICustomerService.class);
 
