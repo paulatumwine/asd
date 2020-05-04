@@ -1,7 +1,11 @@
 package customers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class CustomerDAO implements ICustomerDAO {
-    ILogger logger;
+    @Autowired ILogger logger;
 
     public CustomerDAO(ILogger logger) {
         this.logger = logger;
