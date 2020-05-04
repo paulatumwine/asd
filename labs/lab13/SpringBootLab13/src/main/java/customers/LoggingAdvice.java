@@ -13,6 +13,10 @@ public class LoggingAdvice {
 
     @After("execution(public * *.EmailSender.sendEmail(..))")
     public void afterEmailIsSent(JoinPoint joinPoint) {
-        System.out.println(LocalDateTime.now() + " method=" + joinPoint.getSignature().getName());
+        Object[] args = joinPoint.getArgs();
+        String email = (String) args[0];
+        String message = (String) args[1];
+        System.out.println(LocalDateTime.now() + " method=" + joinPoint.getSignature().getName()
+                + " address=" + email + " message=" + message);
     }
 }
