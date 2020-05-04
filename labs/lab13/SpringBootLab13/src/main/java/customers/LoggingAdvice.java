@@ -17,6 +17,7 @@ public class LoggingAdvice {
         String email = (String) args[0];
         String message = (String) args[1];
         System.out.println(LocalDateTime.now() + " method=" + joinPoint.getSignature().getName()
-                + " address=" + email + " message=" + message);
+                + " address=" + email + " message=" + message
+                + " outgoing mail server=" + ((EmailSender) joinPoint.getTarget()).getOutgoingMailServer());
     }
 }
