@@ -1,10 +1,13 @@
 package customers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerService implements ICustomerService {
+    @Autowired
+    ApplicationEventPublisher publisher;
 	@Autowired
 	ICustomerDAO customerDAO;
 	@Autowired
@@ -16,6 +19,7 @@ public class CustomerService implements ICustomerService {
 		customer.setAddress(address);
 		customerDAO.save(customer);
 		emailSender.sendEmail(email, "Welcome " + name + " as a new customer");
+		publisher.publishEvent(new NewCustomerEvent(customer));
 	}
 
 	public void setCustomerDAO(ICustomerDAO customerDAO) {
